@@ -137,8 +137,25 @@ function TodoApp() {
                     {
                         tag: 'p',
                         attrs: {},
+                        children: ['Double-click to edit a todo']
+                    },
+                    {
+                        tag: 'p',
+                        attrs: {},
                         children: [
-                            'Double-click to edit a todo'
+                            'Created by the TodoMVC Team'
+                        ]
+                    },
+                    {
+                        tag: 'p',
+                        attrs: {},
+                        children: [
+                            'Part of ',
+                            {
+                                tag: 'a',
+                                attrs: { href: 'http://todomvc.com' },
+                                children: ['TodoMVC']
+                            }
                         ]
                     }
                 ]
@@ -147,4 +164,4 @@ function TodoApp() {
     }
 }
 
-render(TodoApp, document.body);
+render(TodoApp, document.getElementById('app'));

@@ -1,3 +1,5 @@
+import { escapeHTML } from '../utils.js';
+
 export class TodoList {
     constructor({ todos, filteredTodos, toggleTodo, toggleAll, deleteTodo, editTodo, toggleEditing }) {
         this.todos = todos;
@@ -9,7 +11,7 @@ export class TodoList {
         this.toggleEditing = toggleEditing;
     }
     render() {
-        const allCompleted = this.filteredTodos.length > 0 && this.filteredTodos.every(todo => todo.completed);
+        const allCompleted = this.todos.length > 0 && this.todos.every(todo => todo.completed);
         return {
             tag: 'main',
             attrs: {
@@ -17,34 +19,28 @@ export class TodoList {
                 'data-testid': 'main'
             },
             children: [
-                this.todos.length > 0 && this.filteredTodos.length > 0 ? {
-                    tag: 'div',
-                    attrs: {
-                        class: 'toggle-all-container'
-                    },
-                    children: [
-                        {
-                            tag: 'input',
-                            attrs: {
-                                class: 'toggle-all',
-                                type: 'checkbox',
-                                id: 'toggle-all',
-                                "data-testid": "toggle-all",
-                                checked: allCompleted,
-                                onChange: (e) => this.toggleAll(e.target.checked)
-                            },
-                            children: ['Mark all as complete']
+                ...(this.todos.length > 0 ? [
+                    {
+                        tag: 'input',
+                        attrs: {
+                            class: 'toggle-all',
+                            type: 'checkbox',
+                            id: 'toggle-all',
+                            "data-testid": "toggle-all",
+                            checked: allCompleted,
+                            onChange: (e) => this.toggleAll(e.target.checked)
                         },
-                        {
-                            tag: 'label',
-                            attrs: {
-                                class: 'toggle-all-label',
-                                htmlFor: 'toggle-all'
-                            },
-                            children: ['Toggle All Input']
-                        }
-                    ]
-                } : null,
+                        children: ['Mark all as complete']
+                    },
+                    {
+                        tag: 'label',
+                        attrs: {
+                            class: 'toggle-all-label',
+                            htmlFor: 'toggle-all'
+                        },
+                        children: ['Toggle All Input']
+                    }
+                ] : []),
                 {
                     tag: 'ul',
                     attrs: {
@@ -99,7 +95,7 @@ class TodoItem {
             const value = e.target.value.trim();
             if (value.length > 2) {
                 this.isSubmitting = true;
-                this.editTodo(this.todo.id, value, false);
+                this.editTodo(this.todo.id, escapeHTML(value), false);
                 setTimeout(() => {
                     this.isSubmitting = false;
                 }, 0);

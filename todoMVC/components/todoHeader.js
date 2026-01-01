@@ -1,3 +1,5 @@
+import { escapeHTML } from '../utils.js';
+
 export class TodoHeader {
     constructor({ addTodo }) {
         this.addTodo = addTodo;
@@ -6,7 +8,7 @@ export class TodoHeader {
         if (e.key === "Enter") {
             const value = e.target.value.trim();
             if (value.length > 2) {
-                this.addTodo(value);
+                this.addTodo(escapeHTML(value));
                 e.target.value = '';
             }
         }
