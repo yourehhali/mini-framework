@@ -4,11 +4,31 @@ import { useState, useEffect, h } from '../core/framework.js';
 export class Router {
     constructor(routes = []) {
         this.routes = routes;
-        window.addEventListener('hashchange', this.handleHashChange.bind(this));
+        this.currentPath = window.location.hash.slice(1) || '/';
+        this.listeners = [];
+        this.handleHashChange = this.handleHashChange.bind(this);
+        window.addEventListener('hashchange', this.handleHashChange);
     }
 
     handleHashChange() {
-        // Can be extended to handle route matching logic if needed
+        this.currentPath = window.location.hash.slice(1) || '/';
+        const match = this.match(this.currentPath);
+        this.notify(match);
+    }
+
+    match(path) {
+        return this.routes.find(route => route.path === path);
+    }
+
+    subscribe(listener) {
+        this.listeners.push(listener);
+        return () => {
+            this.listeners = this.listeners.filter(l => l !== listener);
+        };
+    }
+
+    notify(match) {
+        this.listeners.forEach(listener => listener(this.currentPath, match));
     }
 
     push(path) {
@@ -46,4 +66,3 @@ export const Link = ({ to, children, ...props }) => {
         children: children
     };
 }
-

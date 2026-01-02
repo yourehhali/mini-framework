@@ -1,4 +1,4 @@
-import { render, useState, useEffect } from '../../src/index.js';
+import { render, useState, useHash } from '../../src/index.js';
 import { TodoHeader } from './components/todoHeader.js';
 import { TodoList } from './components/todoList.js';
 import { TodoFooter } from './components/todoFooter.js';
@@ -14,24 +14,10 @@ const generateId = () => `${Date.now().toString(36)}_${(__idCounter++).toString(
 
 function TodoApp() {
     const [todos, setTodos] = useState([])
-    const [filter, setFilter] = useState(FILTERS.ALL)
+    const hash = useHash();
 
-    useEffect(() => {
-        const handleHashChange = () => {
-            const hash = window.location.hash.replace('#/', '') || FILTERS.ALL;
-            if (Object.values(FILTERS).includes(hash)) setFilter(hash);
-        };
-        handleHashChange();
-        window.addEventListener('hashchange', handleHashChange);
-        return () => {
-            window.removeEventListener('hashchange', handleHashChange);
-        };
-    }, []);
-
-    useEffect(() => {
-        const hash = filter === FILTERS.ALL ? '' : filter;
-        window.location.hash = hash ? `#/${hash}` : '#/';
-    }, [filter]);
+    const route = hash.replace('/', '') || FILTERS.ALL;
+    const filter = Object.values(FILTERS).includes(route) ? route : FILTERS.ALL;
 
     const handleAddTodo = (text) => {
         setTodos([...todos, {
