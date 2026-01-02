@@ -13,7 +13,7 @@ cat << 'EOF' > "$SCRIPT_PATH"
 #!/bin/bash
 
 # Configuration
-START_DATE="2024-11-13 09:00:00"
+START_DATE="2025-12-18 14:32:22"
 STORE_DIR="$HOME/.git_fake_commit_dates"
 
 # Ensure inside git repo
