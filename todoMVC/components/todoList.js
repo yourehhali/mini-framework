@@ -21,24 +21,30 @@ export class TodoList {
             children: [
                 ...(this.todos.length > 0 ? [
                     {
-                        tag: 'input',
-                        attrs: {
-                            class: 'toggle-all',
-                            type: 'checkbox',
-                            id: 'toggle-all',
-                            "data-testid": "toggle-all",
-                            checked: allCompleted,
-                            onChange: (e) => this.toggleAll(e.target.checked)
-                        },
-                        children: ['Mark all as complete']
-                    },
-                    {
-                        tag: 'label',
-                        attrs: {
-                            class: 'toggle-all-label',
-                            htmlFor: 'toggle-all'
-                        },
-                        children: ['Toggle All Input']
+                        tag: 'div',
+                        attrs: { class: 'toggle-all-container' },
+                        children: [
+                            {
+                                tag: 'input',
+                                attrs: {
+                                    class: 'toggle-all',
+                                    type: 'checkbox',
+                                    id: 'toggle-all',
+                                    "data-testid": "toggle-all",
+                                    checked: allCompleted,
+                                    onChange: (e) => this.toggleAll(e.target.checked)
+                                },
+                                children: ['Mark all as complete']
+                            },
+                            {
+                                tag: 'label',
+                                attrs: {
+                                    class: 'toggle-all-label',
+                                    htmlFor: 'toggle-all'
+                                },
+                                children: ['Toggle All Input']
+                            }
+                        ]
                     }
                 ] : []),
                 {

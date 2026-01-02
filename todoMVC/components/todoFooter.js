@@ -19,7 +19,7 @@ export class TodoFooter {
                     tag: 'span',
                     attrs: { class: 'todo-count' },
                     children: [
-                        `${activeTodoCount.toString()} item${activeTodoCount !== 1 ? 's' : ''} left`
+                        `${activeTodoCount.toString()} item${activeTodoCount !== 1 ? 's' : ''} left!`
                     ]
                 },
                 {
